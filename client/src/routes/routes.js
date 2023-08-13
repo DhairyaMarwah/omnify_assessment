@@ -23,7 +23,7 @@ export default function Navigation() {
             path={route.path}
             element={
               route.private && !user ? (
-                <Navigate to="/login/individual" />
+                <Navigate to="/login" />
               ) : (
                 route.element
               )

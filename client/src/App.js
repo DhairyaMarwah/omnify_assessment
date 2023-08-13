@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navigation from "./routes/routes";
 import Sidebar from "./components/Sidebar/Sidebar";
+import SidebarWidth from "./components/Sidebar/SidebarWidth";
 
 function App() {
   return (
@@ -11,7 +12,10 @@ function App() {
       <ToastContainer />
       <div className="sidebar-flex">
         <Sidebar />
-        <Navigation />
+        <SidebarWidth />
+        <div className="content">
+          <Navigation />
+        </div>
       </div>
     </BrowserRouter>
   );

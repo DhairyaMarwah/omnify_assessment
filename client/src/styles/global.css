@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;;&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color: #191919;
+  color: #d4d4d4;
+}
+.sidebar-flex {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  position: fixed;
+  height: 100vh;
+  background-color: #202020;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.content {
+  padding-top: 2rem;
+  width: 100%;
+}
+.sidebar-width {
+  width: 100px;
+}
+.home-page {
+  width: 90%;
+  margin: 0 auto;
+}
+.home-page-search {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sidebar-links {
+  margin-top: 2rem;
+}
+.sidebar-one,
+.sidebar-links {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+.sidebar-links > div {
+  cursor: pointer;
+}
+.sidebar-links .active {
+  padding: 12px;
+  border-radius: 11.401px;
+  background: #2b2b2b;
+}
+.header-text {
+  color: #d4d4d4;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.36px;
+}
+.search-bar {
+  position: relative;
+  width: 350px;
+}
+.search-bar img {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+}
+.search-bar input {
+  border-radius: 18px;
+  border: none;
+  background: #212121;
+  width: 100%;
+  padding: 12px 55px;
+  color: #fff;
+
+  font-size: 17.06px;
+  font-weight: 500;
+  letter-spacing: -0.171px;
+}
+.search-bar input::placeholder {
+  font-size: 17.06px;
+  opacity: 1;
+  font-weight: 500;
+  letter-spacing: -0.171px;
+}
+.filters {
+  display: flex;
+  gap: 1.1rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+.filter {
+  border-radius: 18.956px;
+  background: #202020;
+  padding: 12px 34px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.171px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.filter:hover{
+    transform: scale(1.08);
+}
+.filter.active{
+    background-color: #866DE7;
+}
