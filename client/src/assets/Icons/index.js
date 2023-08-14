@@ -5,6 +5,8 @@ import Favourite from "./Favourite.svg";
 import Search from "./Search.svg";
 import Bg from "./bg.png";
 import Card from "./card.png";
+import Heart from "./Heart.svg";
+import EmptyHeart from "./EmptyHeart.svg";
 const Icons = {
   Logo,
   Home,
@@ -13,6 +15,8 @@ const Icons = {
   Search,
   Bg,
   Card,
+  Heart,
+  EmptyHeart,
 };
 
 export default Icons;

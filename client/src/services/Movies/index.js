@@ -1,12 +1,8 @@
 import apiCall from "../apiCall";
 
-export const feetchMovies = async () => {
+export const fetchMovies = async (userID) => {
   try {
-    return apiCall(
-      `/popular?api_key=${process.env.REACT_APP_API_KEY}`,
-      "GET",
-      null
-    );
+    return apiCall(`/getMovieData?user_id=${userID}`, "GET", null);
   } catch (error) {
     throw new Error(`Fetching Movies Failed: ${error.message}`);
   }
@@ -14,7 +10,7 @@ export const feetchMovies = async () => {
 
 export const addFavorities = async (formData) => {
   try {
-    return apiCall(`/favorite-movies`, "POST", formData);
+    return apiCall(`/addFavorite`, "POST", formData);
   } catch (error) {
     throw new Error(`Posting Favorite Movies Failed: ${error.message}`);
   }
@@ -31,8 +27,17 @@ export const fetchFavorities = async () => {
 
 export const searchMovies = async (searchTerm) => {
   try {
-    return apiCall(`/search-movies?${searchTerm}`, "GET", null);
+    return apiCall(`/search-movies?query=${searchTerm}`, "GET", null);
   } catch (error) {
     throw new Error(`Searching Movies Failed: ${error.message}`);
   }
 };
+
+
+export const similarMovies = async (movieID) => {
+    try {
+        return apiCall(`/fetchByGenre/${movieID}`, "GET", null);
+    } catch (error) {
+        throw new Error(`Fetching Similar Movies Failed: ${error.message}`);
+    }
+}

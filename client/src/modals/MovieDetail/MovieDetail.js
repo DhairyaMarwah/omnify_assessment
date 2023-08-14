@@ -1,5 +1,8 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { addFavorities, similarMovies } from "../../services/Movies";
+import Icons from "../../assets/Icons";
+import { errorToast, successToast } from "../../utils/toast";
 const backdrop = {
   visible: { opacity: 1 },
   hidden: { opacity: 0 },
@@ -14,7 +17,26 @@ const modal = {
   },
 };
 const MovieDetail = ({ showModal, setShowModal, detail }) => {
-  console.log(detail);
+  const [similiar, setsimiliar] = useState();
+  useEffect(() => {
+    const fetchSimiliar = async () => {
+      const res = await similarMovies(detail?.id);
+      console.log(res);
+      setsimiliar(res.results);
+    };
+    fetchSimiliar();
+  }, [detail?.id]);
+  const addtofav = async (movie) => {
+    const payload = {
+      user_id: JSON.parse(localStorage.getItem("movieUser")).id,
+      movie_data: movie,
+    };
+    const res = await addFavorities(payload);
+    console.log(res);
+    if (res) {
+      successToast("Added to favorites");
+    }
+  };
   return (
     <AnimatePresence>
       {showModal && (
@@ -71,7 +93,43 @@ const MovieDetail = ({ showModal, setShowModal, detail }) => {
               </div>
               <div className="recommended">
                 <div className="header-text">More Like this 🍿</div>
+                <div className="top-listed-movies-list | similiar-list">
+              {similiar?.map((movie, index) => {
+                return (
+                  <div className="top-listed-movies-list-item" key={index}>
+                    <div className="top-listed-movies-list-item-img">
+                      <img 
+                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                        alt=""
+                      />
+                    </div>
+
+                    <div className="top-listed-movies-list-item-content">
+                      <h1>{movie.title}</h1>
+                      <div
+                        onClick={() => {
+                          if (!movie.is_favorite) {
+                            addtofav(movie);
+                          } else {
+                            errorToast("Already added to favorites");
+                          }
+                        }}
+                        className="heart"
+                      >
+                        <img
+                          src={
+                            movie.is_favorite ? Icons.Heart : Icons.EmptyHeart
+                          }
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
               </div>
+
             </div>
           </motion.div>
         </motion.div>
