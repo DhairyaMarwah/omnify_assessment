@@ -48,9 +48,11 @@ class Register:
             return Response(user_serialized.data, status=status.HTTP_201_CREATED)
         
 class GetDataFromApi:
-    @api_view(['GET'])  # Specify the HTTP method
+    @api_view(['GET'])
     def get_data(request):
         try:
+            user_id = request.GET.get('user_id')
+            
             api_url = "https://api.themoviedb.org/3/movie/popular"
             api_key = '29d9c3e420b65d9f5e36861f0426614e'
             headers = {
@@ -65,7 +67,21 @@ class GetDataFromApi:
 
             if response.status_code == status.HTTP_200_OK:
                 data = response.json()
-                print(data)
+
+                # Check if user_id parameter is provided
+                if user_id:
+                    try:
+                        user = User.objects.get(pk=user_id)
+                        favorite_movies = FavoriteMovie.objects.filter(user=user)
+                        favorite_movie_ids = [fav.movie_data['id'] for fav in favorite_movies]
+
+                        # Check if any fetched movie is in user's favorites
+                        for movie in data['results']:
+                            movie_id = movie['id']
+                            movie['is_favorite'] = movie_id in favorite_movie_ids
+                    except User.DoesNotExist:
+                        return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
                 return Response(data, status=status.HTTP_200_OK)
             else:
                 return Response({"error": "Failed to fetch data"}, status=response.status_code)
@@ -122,7 +138,7 @@ class FavoriteMovieList(APIView):
         serializer = FavoriteMovieSerializer(favorite_movie)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
-class FavoriteMovieList(APIView):
+class FetchFavoriteMovieList(APIView):
     def get(self, request, user_id):
         try:
             user = User.objects.get(pk=user_id)
@@ -131,3 +147,79 @@ class FavoriteMovieList(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+class FetchSimilarMovies(APIView):
+    def get(self, request, movie_id):
+        try:
+            api_url = f"https://api.themoviedb.org/3/movie/{movie_id}/similar?language=en-US&page=1"
+            api_key = '29d9c3e420b65d9f5e36861f0426614e'  # Update with your TMDb API key
+            headers = {
+                "accept": "application/json",
+            }
+
+            params = {
+                'api_key': api_key,
+            }
+
+            response = requests.get(api_url, headers=headers, params=params)
+
+            if response.status_code == status.HTTP_200_OK:
+                data = response.json()
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Failed to fetch similar movies"}, status=response.status_code)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class FetchMovieGenres(APIView):
+    def get(self, request):
+        try:
+            api_url = "https://api.themoviedb.org/3/genre/movie/list"
+            api_key = '29d9c3e420b65d9f5e36861f0426614e'  # Update with your TMDb API key
+            headers = {
+                "accept": "application/json",
+            }
+
+            params = {
+                'api_key': api_key,
+                'language': 'en',
+            }
+
+            response = requests.get(api_url, headers=headers, params=params)
+
+            if response.status_code == status.HTTP_200_OK:
+                data = response.json()
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Failed to fetch movie genres"}, status=response.status_code)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class FetchMoviesByGenre(APIView):
+    def get(self, request, genre_id):
+        try:
+            api_url = "https://api.themoviedb.org/3/discover/movie"
+            api_key = '29d9c3e420b65d9f5e36861f0426614e'  # Update with your TMDb API key
+            headers = {
+                "accept": "application/json",
+            }
+
+            params = {
+                'api_key': api_key,
+                'with_genres': genre_id,
+            }
+
+            response = requests.get(api_url, headers=headers, params=params)
+
+            if response.status_code == status.HTTP_200_OK:
+                data = response.json()
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Failed to fetch movies by genre"}, status=response.status_code)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
