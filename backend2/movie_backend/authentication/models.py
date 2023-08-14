@@ -1,5 +1,4 @@
-# authentication/models.py
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -13,3 +12,10 @@ class User(models.Model):
 
     def __str__(self):
         return self.email
+
+class FavoriteMovie(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie_data = models.JSONField()  # Store the movie data as JSON
+
+    def __str__(self):
+        return f"{self.user.email} - {self.movie_data.get('title', 'No Title')}"

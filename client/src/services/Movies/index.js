@@ -12,34 +12,27 @@ export const feetchMovies = async () => {
   }
 };
 
-// create a function to call post request for favorite movies submission
-export const postFavoriteMovies = async (formData) => {
+export const addFavorities = async (formData) => {
   try {
-    return apiCall(`/favoriteMovie`, "POST", formData);
+    return apiCall(`/favorite-movies`, "POST", formData);
   } catch (error) {
     throw new Error(`Posting Favorite Movies Failed: ${error.message}`);
   }
 };
 
-//now to get the favorite movies
-export const getFavoriteMovies = async () => {
+export const fetchFavorities = async () => {
+  const userID = JSON.parse(localStorage.getItem("movieUser")).id;
   try {
-    return apiCall(`/favorite`, "GET", null);
+    return apiCall(`/favorite-movies/${userID}`, "GET", null);
   } catch (error) {
-    throw new Error(`Getting Favorite Movies Failed: ${error.message}`);
+    throw new Error(`Fetching Favorite Movies Failed: ${error.message}`);
   }
 };
 
-
-// search movie by title
-export const searchMovie = async (title) => {
-    try {
-        return apiCall(
-        `/search?title=${title}&api_key=${process.env.REACT_APP_API_KEY}`,
-        "GET",
-        null
-        );
-    } catch (error) {
-        throw new Error(`Searching Movie Failed: ${error.message}`);
-    }
-}
+export const searchMovies = async (searchTerm) => {
+  try {
+    return apiCall(`/search-movies?${searchTerm}`, "GET", null);
+  } catch (error) {
+    throw new Error(`Searching Movies Failed: ${error.message}`);
+  }
+};
