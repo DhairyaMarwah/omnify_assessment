@@ -36,7 +36,7 @@ const Sidebar = () => {
             }}
             className={`sidebar-links_item ${location.pathname === "/favorites" ? "active" : ""}`}
           >
-            <img src={Icons.Favourite} alt="" />
+            <img src={Icons.Fav} alt="" />
           </div>
         </div>
       </div>
