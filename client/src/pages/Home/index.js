@@ -53,8 +53,41 @@ const Index = () => {
           );
         })}
       </div>
-      <div className="hero-section-img">
-        
+      <div className="hero-section">
+        <div className="hero-section-one">
+          <div className="hero-section-one-img">
+            <img src={Icons.Bg} alt="" />
+          </div>
+          <div className="hero-section-one-text">
+            <h1>Interstellar</h1>
+            <p>
+              Set in a future where a failing Earth puts humanity on the brink
+              of extinction, it sees an intrepid team of NASA scientists,
+              engineers and pilots attempt to find a new habitable planet, via
+              interstellar travel.
+            </p>
+          </div>
+        </div>
+        <div className="hero-section-two">
+          <div className="hero-section-two-card-back"></div>
+          <div className="hero-section-two-card">
+            <img src={Icons.Card} alt="" />
+            <div className="hero-section-two-card-content">
+              <h1>Star Wars: the league</h1>
+              <p>
+                Set in a future where a failing Earth puts humanity on the brink
+                of extinction,
+              </p>
+            </div>
+            <div className="hero-section-two-card-content-info">
+              <p>22nd January</p>
+              <p>2023</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="top-listed-movies">
+        <div className="header-text">Top Listed Movies 🍿</div>
       </div>
     </div>
   );

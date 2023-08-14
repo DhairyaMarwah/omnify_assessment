@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;;&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -107,9 +107,97 @@ body {
   transition: all 0.3s ease;
   cursor: pointer;
 }
-.filter:hover{
-    transform: scale(1.08);
+.filter:hover {
+  transform: scale(1.08);
 }
-.filter.active{
-    background-color: #866DE7;
+.filter.active {
+  background-color: #866de7;
+}
+.hero-section {
+  margin-top: 3rem;
+}
+.hero-section-one {
+  position: relative;
+}
+.hero-section-one .hero-section-one-text {
+  position: absolute;
+  bottom: 3rem;
+  left: 40px;
+}
+.hero-section {
+  display: flex;
+  /* align-items: center; */
+  gap: 40px;
+}
+.hero-section-one {
+  width: 68%;
+}
+.hero-section-one img {
+  width: 100%;
+}
+.hero-section-two {
+  width: 32%;
+}
+.hero-section-two {
+  position: relative;
+}
+.hero-section-two-card-back {
+  border-radius: 28px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #313131;
+}
+.hero-section-two-card {
+  width: 100%;
+  border-radius: 28px;
+  background: #2b2a2a;
+  padding: 29px 20px;
+  transform: rotate(-6deg);
+}
+
+.hero-section-two-card img {
+  width: 100%;
+  border-radius: 28px;
+}
+.hero-section-two-card-content,
+.hero-section-two-card-content-info {
+  padding: 0 16px;
+}
+.hero-section-two-card-content h1 {
+  color: #866de7;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.22px;
+  margin-top: 8px;
+}
+.hero-section-two-card-content p {
+  color: #fff;
+  font-size: 16px;
+  opacity: 0.7;
+  font-weight: 400;
+  line-height: 26.543px; /* 165.891% */
+  letter-spacing: -0.32px;
+}
+.hero-section-one-img {
+  height: 100%;
+}
+.hero-section-one-img img {
+  height: 100%;
+  border-radius: 30px;
+  object-fit: cover;
+}
+.hero-section-two-card-content-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.8rem;
+}
+
+.hero-section-two-card-content-info p {
+  opacity: 0.7;
+}
+.top-listed-movies{
+    margin-top: 3rem;
 }
