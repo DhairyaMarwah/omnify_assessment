@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Icons from "../../assets/Icons";
 import _debounce from "lodash/debounce";
+import moment from "moment";
 import {
   addFavorities,
+  fetchGenre,
+  fetchGenreMovies,
   fetchMovies,
   searchMovies,
 } from "../../services/Movies";
@@ -11,30 +14,7 @@ import { errorToast, successToast } from "../../utils/toast";
 
 const Index = () => {
   const user = JSON.parse(localStorage.getItem("movieUser"));
-  const filters = [
-    {
-      name: "🍿  All",
-    },
-    {
-      name: "🎥  Movies",
-    },
-    {
-      name: "📺  TV Shows",
-    },
-    {
-      name: "🎬  Documentaries",
-    },
-    {
-      name: "🎵  Music",
-    },
-    {
-      name: "🎵  Music",
-    },
-
-    {
-      name: "🎵  Music",
-    },
-  ];
+  const [filters, setfilters] = useState();
   const [activeFilter, setActiveFilter] = useState(0); // Initialize with the index of the default active filter
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -67,13 +47,16 @@ const Index = () => {
     };
     fetch();
   }, [user.id]);
+  useEffect(() => {
+    const fetchAllGenres = async () => {
+      const res = await fetchGenre();
+      console.log(res);
+      setfilters(res.genres);
+    };
+    fetchAllGenres();
+  }, []);
   const [showModal, setShowModal] = useState(false);
   const [detail, setdetail] = useState();
-  //   if (showModal) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "unset";
-  //   }
   const addtofav = async (movie) => {
     const payload = {
       user_id: JSON.parse(localStorage.getItem("movieUser")).id,
@@ -85,6 +68,12 @@ const Index = () => {
       successToast("Added to favorites");
     }
   };
+
+  const handleGenreClick = async (genre_id) => {
+    const res = await fetchGenreMovies(genre_id);
+    console.log(res);
+    setMovies(res.results);
+  };
   return (
     <div className="wrap">
       <div
@@ -92,13 +81,13 @@ const Index = () => {
           showModal === true ? "home-page |  overflow-hidden" : "home-page"
         }
       >
-        {showModal && (
-          <MovieDetail
-            showModal={showModal}
-            setShowModal={setShowModal}
-            detail={detail}
-          />
-        )}
+            {showModal && (
+            <MovieDetail
+                showModal={showModal}
+                setShowModal={setShowModal}
+                detail={detail}
+            />
+            )}
 
         <div className="home-page-search">
           <div className="header-text">Movies 🍿</div>
@@ -119,7 +108,7 @@ const Index = () => {
         {searchResults.length > 0 ? (
           <>
             <div className="top-listed-movies-list">
-              {searchResults.map((movie, index) => {
+              {searchResults?.map((movie, index) => {
                 return (
                   <div className="top-listed-movies-list-item" key={index}>
                     <div className="top-listed-movies-list-item-img">
@@ -161,14 +150,17 @@ const Index = () => {
         ) : (
           <>
             <div className="filters">
-              {filters.map((filter, index) => {
+              {filters?.slice(0, 5)?.map((filter, index) => {
                 return (
                   <div
                     className={`filter ${
                       activeFilter === index ? "active" : ""
                     }`}
                     key={index}
-                    onClick={() => handleFilterClick(index)}
+                    onClick={() => {
+                      handleFilterClick(index);
+                      handleGenreClick(filter.id);
+                    }}
                   >
                     {filter.name}
                   </div>
@@ -178,32 +170,31 @@ const Index = () => {
             <div className="hero-section">
               <div className="hero-section-one">
                 <div className="hero-section-one-img">
-                  <img src={Icons.Bg} alt="" />
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movies[0]?.backdrop_path}`}
+                    alt=""
+                  />
+                  <div className="img-layer"></div>
                 </div>
                 <div className="hero-section-one-text">
-                  <h1>Interstellar</h1>
-                  <p>
-                    Set in a future where a failing Earth puts humanity on the
-                    brink of extinction, it sees an intrepid team of NASA
-                    scientists, engineers and pilots attempt to find a new
-                    habitable planet, via interstellar travel.
-                  </p>
+                  <h1>{movies[0]?.title}</h1>
+                  <p>{movies[0]?.overview}</p>
                 </div>
               </div>
               <div className="hero-section-two">
                 <div className="hero-section-two-card-back"></div>
                 <div className="hero-section-two-card">
-                  <img src={Icons.Card} alt="" />
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movies[2]?.backdrop_path}`}
+                    alt=""
+                  />
                   <div className="hero-section-two-card-content">
-                    <h1>Star Wars: the league</h1>
-                    <p>
-                      Set in a future where a failing Earth puts humanity on the
-                      brink of extinction,
-                    </p>
+                    <h1>{movies[2]?.title}</h1>
+                    <p>{movies[2]?.overview.substring(0, 100)}...</p>
                   </div>
                   <div className="hero-section-two-card-content-info">
-                    <p>22nd January</p>
-                    <p>2023</p>
+                    <p>{moment(movies[2]?.release_date).format("MMM Do")}</p>
+                    <p>{movies[2]?.release_date.split("-")[0]}</p>
                   </div>
                 </div>
               </div>

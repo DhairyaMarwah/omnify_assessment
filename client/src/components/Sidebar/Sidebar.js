@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Icons from "../../assets/Icons";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const location = useLocation();
-  const [hide, sethide] = useState(false);
-  // if location is login hide sidebar
+  const navigate = useNavigate();
+  const [hide, setHide] = useState(false);
+
   useEffect(() => {
     if (location.pathname === "/login" || location.pathname === "/signup") {
-      sethide(true);
+      setHide(true);
+    } else {
+      setHide(false);
     }
   }, [location]);
+
   return (
     <div className={hide ? "sidebar | hide" : "sidebar"}>
       <div className="sidebar-one">
@@ -18,10 +22,20 @@ const Sidebar = () => {
           <img src={Icons.Logo} alt="" />
         </div>
         <div className="sidebar-links">
-          <div className="sidebar-links_item active">
+          <div
+            onClick={() => {
+              navigate("/");
+            }}
+            className={`sidebar-links_item ${location.pathname === "/" ? "active" : ""}`}
+          >
             <img src={Icons.Home} alt="" />
           </div>
-          <div className="sidebar-links_item">
+          <div
+            onClick={() => {
+              navigate("/favorites");
+            }}
+            className={`sidebar-links_item ${location.pathname === "/favorites" ? "active" : ""}`}
+          >
             <img src={Icons.Favourite} alt="" />
           </div>
         </div>

@@ -13,7 +13,7 @@ const routes = [
     private: false,
   },
   {
-    path: "/favourities",
+    path: "/favorites",
     exact: true,
     name: "Favourities",
     element: <Favourities />,

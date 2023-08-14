@@ -41,3 +41,19 @@ export const similarMovies = async (movieID) => {
         throw new Error(`Fetching Similar Movies Failed: ${error.message}`);
     }
 }
+
+export const fetchGenre= async () => {
+    try {
+        return apiCall(`/genres`, "GET", null);
+    } catch (error) {
+        throw new Error(`Fetching Genre Failed: ${error.message}`);
+    }
+}
+
+export const fetchGenreMovies = async (id) => {
+    try {
+        return apiCall(`/category/${id}`, "GET", null);
+    } catch (error) {
+        throw new Error(`Fetching Genre Movies Failed: ${error.message}`);
+    }
+}
