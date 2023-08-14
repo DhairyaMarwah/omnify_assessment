@@ -29,3 +29,17 @@ export const getFavoriteMovies = async () => {
     throw new Error(`Getting Favorite Movies Failed: ${error.message}`);
   }
 };
+
+
+// search movie by title
+export const searchMovie = async (title) => {
+    try {
+        return apiCall(
+        `/search?title=${title}&api_key=${process.env.REACT_APP_API_KEY}`,
+        "GET",
+        null
+        );
+    } catch (error) {
+        throw new Error(`Searching Movie Failed: ${error.message}`);
+    }
+}
