@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <ToastContainer />
-      <div className="sidebar-flex">
+      <div className="sidebar-flex"> 
         <Sidebar />
         <SidebarWidth />
         <div className="content">
