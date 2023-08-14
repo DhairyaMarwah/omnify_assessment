@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/Home";
 import Login from "../pages/Authentication/Login";
 import Signup from "../pages/Authentication/Signup";
+import Favourities from "../pages/Favourities/Favourities";
 const routes = [
   {
     path: "/",
@@ -10,6 +11,13 @@ const routes = [
     name: "Home",
     element: <Home />,
     private: false,
+  },
+  {
+    path: "/favourities",
+    exact: true,
+    name: "Favourities",
+    element: <Favourities />,
+    private: true,
   },
   {
     path: "/login",

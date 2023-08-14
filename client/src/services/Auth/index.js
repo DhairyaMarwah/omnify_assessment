@@ -1,18 +1,16 @@
-import { errorToast } from "../../utils/toast";
+import { errorToast, successToast } from "../../utils/toast";
 import apiCall from "../apiCall";
 
 function handleSuccess(data, navigate) {
-  const userData = {
-    private_key: data?.private_key,
-    username: data?.user.name,
-    user_id: data?.user.id,
-  };
+  const userData = data;
   localStorage.setItem("movieUser", JSON.stringify(userData));
+  successToast("Authenticated Successful");
   navigate("/");
+
   return data;
 }
 
-export const login = async (navigate, formData) => {
+export const login = async (formData, navigate) => {
   try {
     const data = await apiCall("/login", "POST", formData);
     return handleSuccess(data, navigate);
@@ -21,9 +19,9 @@ export const login = async (navigate, formData) => {
   }
 };
 
-export const signup = async (navigate, formData) => {
+export const signup = async (formData, navigate) => {
   try {
-    const data = await apiCall("/signup", "POST", formData);
+    const data = await apiCall("/register", "POST", formData);
     return handleSuccess(data, navigate);
   } catch (error) {
     console.error(error);

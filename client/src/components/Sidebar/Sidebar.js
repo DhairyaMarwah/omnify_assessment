@@ -7,7 +7,7 @@ const Sidebar = () => {
   const [hide, sethide] = useState(false);
   // if location is login hide sidebar
   useEffect(() => {
-    if (location.pathname === "/login") {
+    if (location.pathname === "/login" || location.pathname === "/signup") {
       sethide(true);
     }
   }, [location]);

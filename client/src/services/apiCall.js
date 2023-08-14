@@ -11,7 +11,7 @@ async function apiCall(endpoint, method, body = null) {
       }
   
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}${endpoint}`,
+        `${process.env.REACT_APP_BACKEND_URL}${endpoint}`,
         options
       );
   
