@@ -2,11 +2,11 @@ import apiCall from "../apiCall";
 import {
   fetchMovies,
   addFavorities,
-  fetchFavorites,
-  searchMovies,
-  similarMovies,
-  fetchGenre,
-  fetchGenreMovies,
+//   fetchFavorites,
+//   searchMovies,
+//   similarMovies,
+//   fetchGenre,
+//   fetchGenreMovies,
 } from "./index";
 
 jest.mock("../apiCall", () => jest.fn());
