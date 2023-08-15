@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter ,HashRouter} from "react-router-dom";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navigation from "./routes/routes";
@@ -8,7 +9,7 @@ import SidebarWidth from "./components/Sidebar/SidebarWidth";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ToastContainer />
       <div className="sidebar-flex"> 
         <Sidebar />
@@ -17,7 +18,7 @@ function App() {
           <Navigation />
         </div>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
