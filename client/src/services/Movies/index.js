@@ -2,7 +2,11 @@ import apiCall from "../apiCall";
 
 export const fetchMovies = async (userID) => {
   try {
-    return apiCall(`/getMovieData?user_id=${userID}`, "GET", null);
+    if (userID) {
+      return apiCall(`/getMovieData?user_id=${userID}`, "GET", null);
+    } else {
+      return apiCall(`/getMovieData`, "GET", null);
+    }
   } catch (error) {
     throw new Error(`Fetching Movies Failed: ${error.message}`);
   }
@@ -33,27 +37,26 @@ export const searchMovies = async (searchTerm) => {
   }
 };
 
-
 export const similarMovies = async (movieID) => {
-    try {
-        return apiCall(`/fetchByGenre/${movieID}`, "GET", null);
-    } catch (error) {
-        throw new Error(`Fetching Similar Movies Failed: ${error.message}`);
-    }
-}
+  try {
+    return apiCall(`/fetchByGenre/${movieID}`, "GET", null);
+  } catch (error) {
+    throw new Error(`Fetching Similar Movies Failed: ${error.message}`);
+  }
+};
 
-export const fetchGenre= async () => {
-    try {
-        return apiCall(`/genres`, "GET", null);
-    } catch (error) {
-        throw new Error(`Fetching Genre Failed: ${error.message}`);
-    }
-}
+export const fetchGenre = async () => {
+  try {
+    return apiCall(`/genres`, "GET", null);
+  } catch (error) {
+    throw new Error(`Fetching Genre Failed: ${error.message}`);
+  }
+};
 
 export const fetchGenreMovies = async (id) => {
-    try {
-        return apiCall(`/category/${id}`, "GET", null);
-    } catch (error) {
-        throw new Error(`Fetching Genre Movies Failed: ${error.message}`);
-    }
-}
+  try {
+    return apiCall(`/category/${id}`, "GET", null);
+  } catch (error) {
+    throw new Error(`Fetching Genre Movies Failed: ${error.message}`);
+  }
+};

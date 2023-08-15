@@ -90,6 +90,10 @@ const Signup = () => {
                 onChange={handlePasswordChange}
               />
             </div>
+            <p>
+              Already have an account?
+              <span onClick={() => navigate("/login")}>Login</span>
+            </p>
             <button type="submit">Submit</button>
           </form>
         </div>

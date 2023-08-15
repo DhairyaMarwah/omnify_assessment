@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { addFavorities, similarMovies } from "../../services/Movies";
+import { useNavigate } from "react-router-dom";
 import Icons from "../../assets/Icons";
 import { errorToast, successToast } from "../../utils/toast";
 const backdrop = {
@@ -17,6 +18,8 @@ const modal = {
   },
 };
 const MovieDetail = ({ showModal, setShowModal, detail }) => {
+  const nav = useNavigate();
+  const user = JSON.parse(localStorage.getItem("movieUser"));
   const [similiar, setsimiliar] = useState();
   useEffect(() => {
     const fetchSimiliar = async () => {
@@ -108,10 +111,14 @@ const MovieDetail = ({ showModal, setShowModal, detail }) => {
                       <h1>{movie.title}</h1>
                       <div
                         onClick={() => {
-                          if (!movie.is_favorite) {
-                            addtofav(movie);
+                          if (user !== null) {
+                            if (!movie.is_favorite) {
+                              addtofav(movie);
+                            } else {
+                              errorToast("Already added to favorites");
+                            }
                           } else {
-                            errorToast("Already added to favorites");
+                            nav("/login");
                           }
                         }}
                         className="heart"

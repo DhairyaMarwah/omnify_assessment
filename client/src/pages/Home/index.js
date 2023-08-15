@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Icons from "../../assets/Icons";
 import _debounce from "lodash/debounce";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import {
   addFavorities,
@@ -13,6 +14,7 @@ import MovieDetail from "../../modals/MovieDetail/MovieDetail";
 import { errorToast, successToast } from "../../utils/toast";
 
 const Index = () => {
+  const nav = useNavigate();
   const user = JSON.parse(localStorage.getItem("movieUser"));
   const [filters, setfilters] = useState();
   const [activeFilter, setActiveFilter] = useState(0); // Initialize with the index of the default active filter
@@ -37,7 +39,7 @@ const Index = () => {
   useEffect(() => {
     const fetch = async () => {
       let res;
-      if (user.id) {
+      if (user?.id) {
         res = await fetchMovies(user.id);
       } else {
         res = await fetchMovies();
@@ -46,7 +48,7 @@ const Index = () => {
       setMovies(res.results);
     };
     fetch();
-  }, [user.id]);
+  }, [user?.id]);
   useEffect(() => {
     const fetchAllGenres = async () => {
       const res = await fetchGenre();
@@ -81,13 +83,13 @@ const Index = () => {
           showModal === true ? "home-page |  overflow-hidden" : "home-page"
         }
       >
-            {showModal && (
-            <MovieDetail
-                showModal={showModal}
-                setShowModal={setShowModal}
-                detail={detail}
-            />
-            )}
+        {showModal && (
+          <MovieDetail
+            showModal={showModal}
+            setShowModal={setShowModal}
+            detail={detail}
+          />
+        )}
 
         <div className="home-page-search">
           <div className="header-text">Movies 🍿</div>
@@ -126,10 +128,14 @@ const Index = () => {
                       <h1>{movie.title}</h1>
                       <div
                         onClick={() => {
-                          if (!movie.is_favorite) {
-                            addtofav(movie);
+                          if (user !== null) {
+                            if (!movie.is_favorite) {
+                              addtofav(movie);
+                            } else {
+                              errorToast("Already added to favorites");
+                            }
                           } else {
-                            errorToast("Already added to favorites");
+                            nav("/login");
                           }
                         }}
                         className="heart"
@@ -220,10 +226,14 @@ const Index = () => {
                         <h1>{movie.title}</h1>
                         <div
                           onClick={() => {
-                            if (!movie.is_favorite) {
-                              addtofav(movie);
+                            if (user !== null) {
+                              if (!movie.is_favorite) {
+                                addtofav(movie);
+                              } else {
+                                errorToast("Already added to favorites");
+                              }
                             } else {
-                              errorToast("Already added to favorites");
+                              nav("/login");
                             }
                           }}
                           className="heart"
