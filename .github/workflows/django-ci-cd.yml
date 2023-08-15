@@ -19,7 +19,7 @@ jobs:
           python-version: '3.x'  # Specify your Python version
 
       - name: Install dependencies
-        run: pip install -r backend/requirements.txt
+        run: pip install -r backend2/movie_backend/requirements.txt
 
       - name: Run Django tests
-        run: python backend/manage.py test
+        run: python backend2/movie_backend/manage.py test
