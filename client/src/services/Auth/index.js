@@ -24,7 +24,6 @@ export const signup = async (formData, navigate) => {
     const data = await apiCall("/register", "POST", formData);
     return handleSuccess(data, navigate);
   } catch (error) {
-    console.error(error);
-    throw new Error(`Signup failed: ${error.message}`);
+    console.log(error.message); 
   }
 };

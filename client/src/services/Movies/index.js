@@ -8,7 +8,8 @@ export const fetchMovies = async (userID) => {
       return apiCall(`/getMovieData`, "GET", null);
     }
   } catch (error) {
-    throw new Error(`Fetching Movies Failed: ${error.message}`);
+    // throw new Error(`Fetching Movies Failed: ${error.message}`);
+    console.log(error.message); 
   }
 };
 
@@ -16,7 +17,8 @@ export const addFavorities = async (formData) => {
   try {
     return apiCall(`/addFavorite`, "POST", formData);
   } catch (error) {
-    throw new Error(`Posting Favorite Movies Failed: ${error.message}`);
+    // throw new Error(`Posting Favorite Movies Failed: ${error.message}`);
+    console.log(error.message);
   }
 };
 
